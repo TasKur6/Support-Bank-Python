@@ -14,7 +14,7 @@ dependencies = [
 packages = [{include = "support_bank_python", from = "src"}]
 
 [tool.poetry.scripts]
-supportbank = "src.pysupportbank.supportbank:main"
+supportbank = "src.support_bank_python.supportbank:main"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
