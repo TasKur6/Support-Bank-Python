@@ -1,4 +1,5 @@
 import csv
+from decimal import Decimal, ROUND_HALF_UP
 
 class Account:
     def __init__(self, name):
@@ -15,7 +16,6 @@ class Account:
     def update_transactions(self, transaction):
         self.transactions.append(transaction)
 
-
 class Transaction:
     def __init__(self, date, from_acc, to_acc, narrative, amount):
         self.date = date
@@ -25,16 +25,16 @@ class Transaction:
         self.amount = amount
 
 def pounds_to_pence(pounds):
-    return round(pounds*100, 0)
+    return int((pounds * 100).to_integral_value(rounding=ROUND_HALF_UP))
 
 def pence_to_pounds(pence):
-    return round(pence/100, 2)
+    return (Decimal(pence) / 100)
 
 def read_file(file_path, account_ledger, transaction_ledger):
     with open(file_path, mode='r') as file:
         csv_file = csv.DictReader(file)
         for line in csv_file:
-            amount = pounds_to_pence(float(line['Amount']))
+            amount = pounds_to_pence(Decimal(line['Amount']))
             t = Transaction(line['Date'], line['From'], line['To'], line['Narrative'], amount)
             transaction_ledger.append(t)
             if line['From'] not in account_ledger:
@@ -67,7 +67,6 @@ def main():
         list_account(account_ledger, account)
     else:
         print("Wrong command!")
-
 
 if __name__ == "__main__":
     main()
