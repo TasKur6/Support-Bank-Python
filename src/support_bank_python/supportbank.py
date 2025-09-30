@@ -48,12 +48,12 @@ def read_file(file_path, account_ledger, transaction_ledger):
 
 def list_all(account_ledger):
     for k, v in account_ledger.items():
-        print(k, pence_to_pounds(v.balance))
+        print(f'{k}: £{pence_to_pounds(v.balance): .2f}')
 
 def list_account(account_ledger, account):
     account_transactions = account_ledger[account].transactions
     for t in account_transactions:
-        print(t.date, t.from_acc, t.to_acc, t.narrative, pence_to_pounds(t.amount))
+        print(f'{t.date}, From: {t.from_acc}, To: {t.to_acc}, {t.narrative}, £{pence_to_pounds(t.amount): .2f}')
 
 def main():
     account_ledger = dict()
